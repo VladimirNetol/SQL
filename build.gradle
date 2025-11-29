@@ -16,6 +16,7 @@ repositories {
 }
 
 dependencies {
+    testImplementation 'com.codeborne:selenide:6.19.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
     testImplementation 'mysql:mysql-connector-java:8.0.22'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
