@@ -1,6 +1,9 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 
@@ -10,7 +13,7 @@ public class DataHelper {
     private DataHelper() {
     }
 
-    public static AuthInfo getAuthInfo () {
+    public static AuthInfo getAuthInfo() {
         return new AuthInfo("vasya", "qwerty123");
     }
 
@@ -26,9 +29,8 @@ public class DataHelper {
         return new AuthInfo(generateRandomLogin(), generateRandomPassword());
     }
 
-    @Value
-    public static class VerificationCode {
-        String code;
+    public static VerificationCode generateVerifyCode() {
+        return new VerificationCode(FAKER.bothify("######"));
     }
 
     @Value
@@ -41,5 +43,12 @@ public class DataHelper {
     public static class AuthInfo {
         String login;
         String password;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class VerificationCode {
+        String code;
     }
 }

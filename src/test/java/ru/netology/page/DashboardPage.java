@@ -7,9 +7,9 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class DashboardPage {
-    private final SelenideElement heading = $(byText("  Личный кабинет".trim()));
+    private final SelenideElement heading = $(byText("  Личный кабинет"));
 
-    public DashboardPage (){
+    public DashboardPage() {
         heading.should(Condition.visible);
     }
 }
