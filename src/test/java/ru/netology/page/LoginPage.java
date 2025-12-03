@@ -3,6 +3,7 @@ package ru.netology.page;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.Keys;
 import ru.netology.data.DataHelper;
 
 import java.time.Duration;
@@ -19,8 +20,9 @@ public class LoginPage {
     private final SelenideElement loginButton = $("[data-test-id= 'action-login']");
     private final SelenideElement errorMessage =
             $("[data-test-id='error-notification'] .notification__content");
-    private final SelenideElement emptyLoginField = $(withText("Поле обязательно для заполнения"));
-    private final SelenideElement emptyPassField = $(withText("Поле обязательно для заполнения"));
+    private final SelenideElement emptyLoginPassField = $(withText("Поле обязательно для заполнения"));
+
+
 
     public LoginPage() {
         heading.should(Condition.visible, Duration.ofSeconds(20));
@@ -48,15 +50,15 @@ public class LoginPage {
     }
 
     public void checkErrorMessage(String expectedText) {
-        errorMessage.should(Condition.visible, Duration.ofSeconds(5)).should(Condition.text(expectedText));
+        errorMessage.should(Condition.visible).should(Condition.text(expectedText));
     }
 
-    public void checkErrorMessageEmptyLoginField () {
-        emptyLoginField.should(Condition.visible);
+    public void checkErrorMessageEmptyField () {
+        emptyLoginPassField.should(Condition.visible);
     }
 
-    public void checkErrorMessageEmptyPassField () {
-        emptyPassField.should(Condition.visible);
+    public void clearAllFields () {
+        loginField.press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+        passField.press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
     }
-
 }

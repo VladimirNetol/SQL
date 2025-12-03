@@ -2,15 +2,14 @@ package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import java.time.Duration;
+import ru.netology.data.DataHelper;
 
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class VerificationPage {
-    private final SelenideElement codeField = $("[data-test-id= 'code'] input");
-    private final SelenideElement verifyButton = $("[data-test-id= 'action-verify']");
-    private final SelenideElement errorMessage =
+    private static final SelenideElement codeField = $("[data-test-id= 'code'] input");
+    private static final SelenideElement verifyButton = $("[data-test-id= 'action-verify']");
+    private static final SelenideElement errorMessage =
             $("[data-test-id= 'error-notification'] .notification__content");
 
     public VerificationPage() {
@@ -23,7 +22,13 @@ public class VerificationPage {
         return new DashboardPage();
     }
 
-    public void checkErrorMessage(String expectedText) {
-        errorMessage.should(Condition.visible, Duration.ofSeconds(5)).should(Condition.text(expectedText));
+    public static void randomVerifyCode() {
+        var code = DataHelper.generateVerifyCode();
+        codeField.setValue(String.valueOf(code));
+        verifyButton.click();
+    }
+
+    public static void checkErrorMessage(String expectedText) {
+        errorMessage.should(Condition.visible).should(Condition.text(expectedText));
     }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
 import ru.netology.data.SQLHelper;
 import ru.netology.page.LoginPage;
+import ru.netology.page.VerificationPage;
 
 import static ru.netology.data.SQLHelper.clearAllFieldValues;
 import static ru.netology.data.SQLHelper.clearValueAuthCodesField;
@@ -48,35 +49,43 @@ public class AuthTest {
     public void shouldCatchLoginEmptyError() {
         var authInfo = DataHelper.generateRandomPassword();
         loginPage.loginEmpty(authInfo);
-        loginPage.checkErrorMessageEmptyLoginField();
+        loginPage.checkErrorMessageEmptyField();
     }
 
     @Test
     public void shouldCatchPassEmptyError() {
         var authInfo = DataHelper.generateRandomLogin();
         loginPage.passEmpty(authInfo);
-        loginPage.checkErrorMessageEmptyPassField();
+        loginPage.checkErrorMessageEmptyField();
+    }
+
+    @Test
+    public void shouldCatchErrorIfVerificationCodeIncorrect() {
+        loginPage.login(authInfo);
+        VerificationPage.randomVerifyCode();
+        VerificationPage.checkErrorMessage("Ошибка! Неверно указан код! Попробуйте ещё раз.");
     }
 
     @Test
     public void shouldCatchErrorIfLogIncorrectlyThreeTimes() {
 
         var authInfo = DataHelper.getRandomUser();
+        loginPage.clearAllFields();
         loginPage.login(authInfo);
         loginPage.checkErrorMessage("Ошибка! Неверно указан логин или пароль");
 
 
         authInfo = DataHelper.getRandomUser();
+        loginPage.clearAllFields();
         loginPage.login(authInfo);
         loginPage.checkErrorMessage("Ошибка! Неверно указан логин или пароль");
 
 
         authInfo = DataHelper.getRandomUser();
+        loginPage.clearAllFields();
         loginPage.login(authInfo);
         loginPage.checkErrorMessage("Ошибка! Неверно указан логин или пароль");
 
         loginPage.checkErrorMessage("Ошибка! Вы ввели неверный пароль три раза! Пользователь заблокирован");
     }
-
-
 }

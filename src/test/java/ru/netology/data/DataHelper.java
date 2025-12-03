@@ -33,6 +33,7 @@ public class DataHelper {
         return new VerificationCode(FAKER.bothify("######"));
     }
 
+
     @Value
     public static class CardInfo {
         String cardNumber;

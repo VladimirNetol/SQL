@@ -15,7 +15,7 @@ public class SQLHelper {
     }
 
     private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("db.url", "vasya", "qwerty123");
+        return DriverManager.getConnection(System.getProperty("db.url"), "app", "pass");
     }
 
     @SneakyThrows
